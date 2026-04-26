@@ -1,0 +1,3373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WanderIndia – Explore Incredible India</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- ======================= STYLES ======================= -->
+    <style>
+      /* ─── CSS Variables ────────────────────────────────────── */
+      :root {
+        --saffron: #e8530a;
+        --gold: #f0a500;
+        --gold-lt: #ffd166;
+        --teal: #0d6e6e;
+        --teal-dk: #084848;
+        --cream: #fff9f2;
+        --cream2: #fff3e3;
+        --ink: #1a1208;
+        --muted: #6b5e52;
+        --card-bg: #ffffff;
+        --shadow: 0 8px 40px rgba(26, 18, 8, 0.12);
+        --radius: 18px;
+        --trans: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* ─── Reset ────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--cream);
+        color: var(--ink);
+        overflow-x: hidden;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul {
+        list-style: none;
+      }
+      button {
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-family: inherit;
+      }
+
+      /* ─── Utilities ────────────────────────────────────────── */
+      .section-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--saffron);
+        margin-bottom: 14px;
+      }
+      .section-tag::before {
+        content: "";
+        width: 28px;
+        height: 2px;
+        background: var(--saffron);
+        border-radius: 2px;
+      }
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.9rem, 4vw, 3rem);
+        font-weight: 900;
+        line-height: 1.15;
+        color: var(--ink);
+      }
+      .section-title span {
+        color: var(--saffron);
+        font-style: italic;
+      }
+      .section-sub {
+        color: var(--muted);
+        font-size: 1.05rem;
+        max-width: 560px;
+        line-height: 1.7;
+        margin-top: 12px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 13px 30px;
+        border-radius: 50px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        transition: var(--trans);
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--saffron);
+        color: #fff;
+        box-shadow: 0 4px 20px rgba(232, 83, 10, 0.35);
+      }
+      .btn-primary:hover {
+        background: #c44007;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(232, 83, 10, 0.45);
+      }
+      .btn-outline {
+        border: 2px solid var(--saffron);
+        color: var(--saffron);
+      }
+      .btn-outline:hover {
+        background: var(--saffron);
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      .btn-teal {
+        background: var(--teal);
+        color: #fff;
+        box-shadow: 0 4px 20px rgba(13, 110, 110, 0.3);
+      }
+      .btn-teal:hover {
+        background: var(--teal-dk);
+        transform: translateY(-2px);
+      }
+
+      /* Scroll-reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+      .reveal-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition:
+          opacity 0.7s ease,
+          transform 0.7s ease;
+      }
+      .reveal-left.visible,
+      .reveal-right.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ─── NAV ──────────────────────────────────────────────── */
+      #navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 20px 0;
+        transition:
+          background var(--trans),
+          padding var(--trans),
+          box-shadow var(--trans);
+      }
+      #navbar.scrolled {
+        background: rgba(255, 249, 242, 0.96);
+        backdrop-filter: blur(12px);
+        padding: 12px 0;
+        box-shadow: 0 2px 20px rgba(26, 18, 8, 0.1);
+      }
+      .nav-inner {
+        max-width: 1260px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .nav-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.55rem;
+        font-weight: 900;
+        color: #fff;
+        transition: color var(--trans);
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
+      #navbar.scrolled .nav-logo {
+        color: var(--ink);
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+      }
+      .nav-links a {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.88);
+        transition: color var(--trans);
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--gold);
+        transition: width var(--trans);
+      }
+      .nav-links a:hover::after,
+      .nav-links a.active::after {
+        width: 100%;
+      }
+      #navbar.scrolled .nav-links a {
+        color: var(--ink);
+      }
+      .nav-cta {
+        background: var(--saffron);
+        color: #fff !important;
+        padding: 10px 24px;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 0.88rem;
+        box-shadow: 0 4px 16px rgba(232, 83, 10, 0.4);
+        transition: var(--trans);
+      }
+      .nav-cta:hover {
+        background: #c44007;
+        transform: translateY(-1px);
+      }
+      .nav-cta::after {
+        display: none !important;
+      }
+
+      /* Hamburger */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        padding: 4px;
+      }
+      .hamburger span {
+        display: block;
+        width: 24px;
+        height: 2px;
+        background: #fff;
+        border-radius: 2px;
+        transition: var(--trans);
+      }
+      #navbar.scrolled .hamburger span {
+        background: var(--ink);
+      }
+      .hamburger.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      .hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      /* Mobile menu */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        background: var(--cream);
+        z-index: 1100;
+        box-shadow: -8px 0 40px rgba(26, 18, 8, 0.15);
+        padding: 80px 32px 32px;
+        transition: right var(--trans);
+        flex-direction: column;
+        gap: 28px;
+      }
+      .mobile-menu.open {
+        right: 0;
+      }
+      .mobile-menu a {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--ink);
+        border-bottom: 1px solid rgba(26, 18, 8, 0.08);
+        padding-bottom: 16px;
+      }
+      .overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(26, 18, 8, 0.5);
+        z-index: 1050;
+      }
+      .overlay.open {
+        display: block;
+      }
+      .close-menu {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        font-size: 1.6rem;
+        color: var(--ink);
+      }
+
+      /* ─── HERO ─────────────────────────────────────────────── */
+      #hero {
+        position: relative;
+        height: 100vh;
+        min-height: 640px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      /* Slideshow BG */
+      .hero-slides {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .hero-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 1.2s ease;
+      }
+      .hero-slide.active {
+        opacity: 1;
+      }
+      /* India landscape images via CSS gradient placeholders — rich colors */
+      .hero-slide:nth-child(1) {
+        background-image:
+          linear-gradient(
+            160deg,
+            rgba(0, 0, 0, 0.55) 0%,
+            rgba(0, 0, 0, 0.25) 60%
+          ),
+          url("https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=1600&q=80");
+      }
+      .hero-slide:nth-child(2) {
+        background-image:
+          linear-gradient(
+            160deg,
+            rgba(0, 0, 0, 0.5) 0%,
+            rgba(0, 0, 0, 0.2) 60%
+          ),
+          url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80");
+      }
+      .hero-slide:nth-child(3) {
+        background-image:
+          linear-gradient(
+            160deg,
+            rgba(0, 0, 0, 0.6) 0%,
+            rgba(0, 0, 0, 0.3) 60%
+          ),
+          url("https://images.unsplash.com/photo-1587474260584-136574528ed5?w=1600&q=80");
+      }
+      .hero-slide:nth-child(4) {
+        background-image:
+          linear-gradient(
+            160deg,
+            rgba(0, 0, 0, 0.5) 0%,
+            rgba(0, 0, 0, 0.2) 60%
+          ),
+          url("https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=80");
+      }
+
+      /* Decorative grain overlay */
+      #hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        opacity: 0.4;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 0 24px;
+        max-width: 900px;
+      }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(8px);
+        border-radius: 50px;
+        padding: 8px 20px;
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+        animation: fadeSlideDown 0.8s ease 0.2s both;
+      }
+      .hero-badge span {
+        color: var(--gold-lt);
+      }
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.8rem, 7vw, 5.5rem);
+        font-weight: 900;
+        color: #fff;
+        line-height: 1.05;
+        animation: fadeSlideUp 0.9s ease 0.4s both;
+      }
+      .hero-title em {
+        font-style: italic;
+        color: var(--gold-lt);
+        display: block;
+      }
+      .hero-sub {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: clamp(0.95rem, 2vw, 1.15rem);
+        margin: 18px auto 36px;
+        max-width: 580px;
+        line-height: 1.7;
+        animation: fadeSlideUp 0.9s ease 0.6s both;
+      }
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        animation: fadeSlideUp 0.9s ease 0.8s both;
+      }
+      .btn-hero {
+        padding: 16px 40px;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .btn-hero-ghost {
+        background: rgba(255, 255, 255, 0.15);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        color: #fff;
+        padding: 14px 36px;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        backdrop-filter: blur(6px);
+        transition: var(--trans);
+      }
+      .btn-hero-ghost:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+      }
+
+      /* Hero stats */
+      /* .hero-stats {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 0; z-index: 2;
+      background: rgba(255,255,255,.1); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.2); border-radius: 16px;
+      overflow: hidden; width: max-content; max-width: calc(100vw - 48px);
+      animation: fadeSlideUp .9s ease 1s both;
+    } */
+      .hero-stat {
+        padding: 14px 28px;
+        text-align: center;
+        border-right: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .hero-stat:last-child {
+        border-right: none;
+      }
+      .hero-stat-num {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--gold-lt);
+      }
+      .hero-stat-lbl {
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.75);
+        font-weight: 500;
+        margin-top: 2px;
+      }
+
+      /* Slide dots */
+      .hero-dots {
+        position: absolute;
+        bottom: 130px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: none;
+        gap: 8px;
+        z-index: 2;
+      }
+      .hero-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        transition: var(--trans);
+      }
+      .hero-dot.active {
+        background: var(--gold-lt);
+        width: 24px;
+        border-radius: 4px;
+      }
+
+      /* ─── SEARCH BAR ───────────────────────────────────────── */
+      #search-bar {
+        background: var(--card-bg);
+        box-shadow: var(--shadow);
+        border-radius: var(--radius);
+        margin: -40px auto 0;
+        position: relative;
+        z-index: 10;
+        max-width: 1100px;
+        padding: 28px 32px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 16px;
+        align-items: end;
+      }
+      .search-field label {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .search-field select,
+      .search-field input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #ede8e1;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.92rem;
+        color: var(--ink);
+        background: #fafaf8;
+        transition: border-color var(--trans);
+        appearance: none;
+        outline: none;
+      }
+      .search-field select:focus,
+      .search-field input:focus {
+        border-color: var(--saffron);
+      }
+
+      /* ─── PACKAGES ─────────────────────────────────────────── */
+      #packages {
+        padding: 0px 24px 80px;
+        max-width: 1260px;
+        margin: 60px auto 0;
+      }
+      .packages-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 56px;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      .packages-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+        gap: 28px;
+      }
+
+      /* Package Card */
+      .pkg-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(26, 18, 8, 0.08);
+        transition:
+          transform var(--trans),
+          box-shadow var(--trans);
+        position: relative;
+      }
+      .pkg-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 50px rgba(26, 18, 8, 0.16);
+      }
+      .pkg-img-wrap {
+        position: relative;
+        height: 220px;
+        overflow: hidden;
+      }
+      .pkg-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+      }
+      .pkg-card:hover .pkg-img-wrap img {
+        transform: scale(1.07);
+      }
+      .pkg-badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: var(--saffron);
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 5px 12px;
+        border-radius: 50px;
+      }
+      .pkg-badge.teal {
+        background: var(--teal);
+      }
+      .pkg-rating {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(6px);
+        color: var(--gold-lt);
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 50px;
+      }
+      .pkg-body {
+        padding: 22px 24px 20px;
+      }
+      .pkg-meta {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 10px;
+        font-size: 0.75rem;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .pkg-meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .pkg-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.22rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .pkg-desc {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.65;
+        margin-bottom: 18px;
+      }
+      .pkg-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+        border-top: 1px solid #f0ebe3;
+      }
+      .pkg-price {
+        font-family: "Poppins", sans-serif
+      }
+      .pkg-price-label {
+        font-size: 0.72rem;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .pkg-price-amount {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--saffron);
+      }
+      .pkg-price-per {
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+      .pkg-actions {
+        display: flex;
+        gap: 10px;
+      }
+      .btn-sm {
+        padding: 9px 18px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: var(--trans);
+      }
+
+      /* ─── WHY US ────────────────────────────────────────────── */
+      #why-us {
+        background: linear-gradient(
+          135deg,
+          var(--teal-dk) 0%,
+          var(--teal) 100%
+        );
+        padding: 90px 24px;
+        margin: 0;
+      }
+      .why-inner {
+        max-width: 1260px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      .why-text .section-tag {
+        color: var(--gold-lt);
+      }
+      .why-text .section-tag::before {
+        background: var(--gold-lt);
+      }
+      .why-text .section-title {
+        color: #fff;
+      }
+      .why-text .section-sub {
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .why-features {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin-top: 40px;
+      }
+      .why-feat {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        padding: 22px;
+        transition: background var(--trans);
+      }
+      .why-feat:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .why-feat-icon {
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+      }
+      .why-feat h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 6px;
+      }
+      .why-feat p {
+        font-size: 0.83rem;
+        color: rgba(255, 255, 255, 0.65);
+        line-height: 1.6;
+      }
+      .why-visual {
+        position: relative;
+      }
+      .why-img-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .why-img-grid img {
+        border-radius: 14px;
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+      .why-img-grid img:hover {
+        transform: scale(1.03);
+      }
+      .why-img-grid img:first-child {
+        grid-row: span 2;
+        height: 374px;
+      }
+      .why-award {
+        position: absolute;
+        bottom: -20px;
+        left: -20px;
+        background: var(--gold);
+        border-radius: 14px;
+        padding: 16px 20px;
+        box-shadow: 0 8px 30px rgba(240, 165, 0, 0.35);
+      }
+      .why-award-num {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--ink);
+      }
+      .why-award-txt {
+        font-size: 0.75rem;
+        color: rgba(26, 18, 8, 0.7);
+        font-weight: 600;
+      }
+
+      /* ─── GALLERY ───────────────────────────────────────────── */
+      #gallery {
+        padding: 100px 24px;
+        max-width: 1260px;
+        margin: 0 auto;
+      }
+      .gallery-header {
+        text-align: center;
+        margin-bottom: 56px;
+      }
+      .gallery-header .section-sub {
+        margin: 0 auto;
+      }
+
+      /* Carousel */
+      .carousel-wrap {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius);
+      }
+      .carousel-track {
+        display: flex;
+        gap: 20px;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .carousel-slide {
+        min-width: calc(33.333% - 14px);
+        border-radius: 14px;
+        overflow: hidden;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .carousel-slide img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .carousel-slide:hover img {
+        transform: scale(1.05);
+      }
+      .carousel-slide-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          to top,
+          rgba(26, 18, 8, 0.8) 0%,
+          transparent 100%
+        );
+        padding: 24px 18px 18px;
+      }
+      .carousel-slide-overlay h4 {
+        color: #fff;
+        font-family: "Playfair Display", serif;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .carousel-slide-overlay p {
+        color: rgba(255, 255, 255, 0.72);
+        font-size: 0.78rem;
+        margin-top: 3px;
+      }
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--card-bg);
+        box-shadow: 0 4px 20px rgba(26, 18, 8, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        z-index: 5;
+        transition: var(--trans);
+        color: var(--ink);
+      }
+      .carousel-btn:hover {
+        background: var(--saffron);
+        color: #fff;
+        transform: translateY(-50%) scale(1.05);
+      }
+      .carousel-btn.prev {
+        left: -20px;
+      }
+      .carousel-btn.next {
+        right: -20px;
+      }
+      .carousel-progress {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 28px;
+      }
+      .c-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ddd5c8;
+        cursor: pointer;
+        transition: var(--trans);
+      }
+      .c-dot.active {
+        background: var(--saffron);
+        width: 24px;
+        border-radius: 4px;
+      }
+
+      /* ─── TESTIMONIALS ──────────────────────────────────────── */
+      #testimonials {
+        background: var(--cream2);
+        padding: 90px 24px;
+      }
+      .testi-inner {
+        max-width: 1260px;
+        margin: 0 auto;
+      }
+      .testi-header {
+        text-align: center;
+        margin-bottom: 56px;
+      }
+      .testi-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+      .testi-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 32px 28px;
+        box-shadow: 0 4px 24px rgba(26, 18, 8, 0.07);
+        transition: transform var(--trans);
+      }
+      .testi-card:hover {
+        transform: translateY(-5px);
+      }
+      .testi-stars {
+        color: var(--gold);
+        font-size: 1rem;
+        margin-bottom: 16px;
+      }
+      .testi-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.12rem;
+        font-style: italic;
+        color: var(--ink);
+        line-height: 1.75;
+        margin-bottom: 24px;
+      }
+      .testi-author {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .testi-avatar {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid var(--cream2);
+      }
+      .testi-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .testi-from {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+
+      /* ─── CONTACT ───────────────────────────────────────────── */
+      #contact {
+        padding: 100px 24px;
+        max-width: 1260px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: start;
+      }
+      .contact-info .section-title {
+        margin-bottom: 20px;
+      }
+      .contact-items {
+        margin-top: 36px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .contact-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--saffron), var(--gold));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .contact-item h4 {
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .contact-item p {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-top: 3px;
+      }
+
+      /* Contact Form */
+      .contact-form {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 40px;
+        box-shadow: var(--shadow);
+      }
+      .contact-form h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 28px;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .form-group {
+        margin-bottom: 18px;
+      }
+      .form-group label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 13px 16px;
+        border: 2px solid #ede8e1;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.92rem;
+        color: var(--ink);
+        background: #fafaf8;
+        outline: none;
+        transition: border-color var(--trans);
+      }
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: var(--saffron);
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 110px;
+      }
+      .form-error {
+        color: #e53935;
+        font-size: 0.78rem;
+        margin-top: 4px;
+        display: none;
+      }
+      .form-error.show {
+        display: block;
+      }
+
+      /* ─── FOOTER ────────────────────────────────────────────── */
+      footer {
+        background: var(--ink);
+        color: rgba(255, 255, 255, 0.75);
+        padding: 70px 24px 28px;
+      }
+      .footer-inner {
+        max-width: 1260px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 48px;
+      }
+      .footer-brand .nav-logo {
+        color: #fff;
+        font-size: 1.6rem;
+        margin-bottom: 16px;
+      }
+      .footer-brand p {
+        font-size: 0.88rem;
+        line-height: 1.75;
+        max-width: 280px;
+      }
+      .footer-socials {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+      }
+      .footer-social {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        transition: var(--trans);
+      }
+      .footer-social:hover {
+        background: var(--saffron);
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      .footer-col h4 {
+        color: #fff;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+      .footer-col ul {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .footer-col ul li a {
+        font-size: 0.88rem;
+        transition: color var(--trans);
+      }
+      .footer-col ul li a:hover {
+        color: var(--gold);
+      }
+      .footer-bottom {
+        max-width: 1260px;
+        margin: 48px auto 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .footer-bottom p {
+        font-size: 0.82rem;
+      }
+
+      /* ─── BOOKING MODAL ─────────────────────────────────────── */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(26, 18, 8, 0.6);
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      .modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal {
+        background: var(--card-bg);
+        border-radius: 24px;
+        max-width: 560px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 40px;
+        position: relative;
+        transform: scale(0.92) translateY(20px);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 30px 80px rgba(26, 18, 8, 0.25);
+      }
+      .modal-overlay.open .modal {
+        transform: scale(1) translateY(0);
+      }
+      .modal-close {
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--cream2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        color: var(--ink);
+        transition: var(--trans);
+      }
+      .modal-close:hover {
+        background: var(--saffron);
+        color: #fff;
+      }
+      .modal-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.7rem;
+        font-weight: 900;
+        margin-bottom: 8px;
+      }
+      .modal-sub {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 28px;
+      }
+      .modal-success {
+        text-align: center;
+        padding: 20px 0;
+        display: none;
+      }
+      .modal-success.show {
+        display: block;
+      }
+      .modal-success-icon {
+        font-size: 3.5rem;
+        margin-bottom: 12px;
+      }
+      .modal-success h3 {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+      }
+      .modal-success p {
+        color: var(--muted);
+      }
+      .modal-form.hidden {
+        display: none;
+      }
+
+      /* ─── DETAILS MODAL ─────────────────────────────────────── */
+      .details-modal {
+        max-width: 700px;
+      }
+      .details-title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
+        font-weight: 900;
+        margin-bottom: 8px;
+      }
+      .details-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 24px;
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .details-meta span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .details-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 14px;
+        margin-bottom: 24px;
+      }
+      /* Accordion */
+      .accordion-item {
+        border: 1px solid #ede8e1;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        overflow: hidden;
+      }
+      .accordion-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        cursor: pointer;
+        transition: background var(--trans);
+      }
+      .accordion-head:hover {
+        background: var(--cream2);
+      }
+      .accordion-head.open {
+        background: var(--cream2);
+      }
+      .accordion-day {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .day-badge {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--saffron), var(--gold));
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        line-height: 1.2;
+        flex-shrink: 0;
+      }
+      .accordion-day-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .accordion-arrow {
+        font-size: 1rem;
+        transition: transform 0.3s ease;
+        color: var(--muted);
+      }
+      .accordion-head.open .accordion-arrow {
+        transform: rotate(180deg);
+      }
+      .accordion-body {
+        max-height: 0;
+        overflow: hidden;
+        transition:
+          max-height 0.4s ease,
+          padding 0.3s ease;
+        padding: 0 20px;
+      }
+      .accordion-body.open {
+        max-height: 600px;
+        padding: 14px 20px 20px;
+      }
+      .accordion-body ul {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .accordion-body li {
+        padding-left: 20px;
+        position: relative;
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .accordion-body li::before {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        color: var(--saffron);
+        font-size: 0.6rem;
+        top: 4px;
+      }
+      .includes-section {
+        margin-top: 24px;
+      }
+      .includes-section h4 {
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--teal);
+      }
+      .includes-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .include-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+      .include-item span {
+        color: var(--teal);
+        font-weight: 700;
+      }
+
+      /* ─── FLOATING BUTTONS ──────────────────────────────────── */
+      .float-btns {
+        position: fixed;
+        bottom: 28px;
+        right: 24px;
+        z-index: 500;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      /* Button Style */
+      .float-btn {
+        position: relative;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 20px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        transition: var(--trans);
+        overflow: hidden;
+      }
+
+      /* Hover Expand Effect */
+      .float-btn span {
+        position: absolute;
+        right: 60px;
+        background: #111;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 13px;
+        opacity: 0;
+        transform: translateX(10px);
+        transition: var(--trans);
+        white-space: nowrap;
+      }
+
+      .float-btn:hover span {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .float-btn:hover {
+        transform: scale(1.12);
+      }
+
+      /* Colors */
+      .float-wa {
+        background: #25d366;
+      }
+
+      .float-call {
+        background: var(--saffron);
+      }
+
+      .float-ig {
+        background: linear-gradient(
+          135deg,
+          #f09433 0%,
+          #e6683c 25%,
+          #dc2743 50%,
+          #cc2366 75%,
+          #bc1888 100%
+        );
+      }
+
+      /* Pulse Animation (WhatsApp only) */
+      .float-wa::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: #25d366;
+        animation: pulse 1.8s infinite;
+        z-index: -1;
+      }
+
+      /* ─── KEYFRAMES ─────────────────────────────────────────── */
+      @keyframes fadeSlideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes fadeSlideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(232, 83, 10, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 10px rgba(232, 83, 10, 0);
+        }
+      }
+      .float-call {
+        animation: pulse 2s infinite;
+      }
+
+      /* ─── RESPONSIVE ────────────────────────────────────────── */
+      @media (max-width: 1024px) {
+        .why-inner {
+          grid-template-columns: 1fr;
+          gap: 50px;
+        }
+        .footer-inner {
+          grid-template-columns: 1fr 1fr;
+        }
+        #contact {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+        .testi-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        #search-bar {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        .mobile-menu {
+          display: flex;
+        }
+        #search-bar {
+          grid-template-columns: 1fr;
+          margin: -20px 16px 0;
+        }
+        .why-features {
+          grid-template-columns: 1fr;
+        }
+        .carousel-slide {
+          min-width: calc(100% - 0px);
+        }
+        .testi-grid {
+          grid-template-columns: 1fr;
+        }
+        .footer-inner {
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+        }
+        .footer-brand {
+          grid-column: span 2;
+        }
+        .form-row {
+          grid-template-columns: 1fr;
+        }
+        .includes-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-stats {
+          flex-wrap: wrap;
+        }
+        .why-img-grid img:first-child {
+          height: 200px;
+        }
+      }
+      @media (max-width: 480px) {
+        .footer-inner {
+          grid-template-columns: 1fr;
+        }
+        .footer-brand {
+          grid-column: span 1;
+        }
+        .packages-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-stat {
+          padding: 10px 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ==================== NAVBAR ==================== -->
+    <nav id="navbar">
+      <div class="nav-inner">
+        <a class="nav-logo" href="#hero">Wander<span>India</span></a>
+        <ul class="nav-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#packages">Packages</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a href="#" class="nav-cta" onclick="openBookingModal(event, null)"
+              >Book Now</a
+            >
+          </li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="overlay" id="overlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+      <button class="close-menu" id="closeMenu">✕</button>
+      <a href="#hero" onclick="closeMobileMenu()">Home</a>
+      <a href="#packages" onclick="closeMobileMenu()">Packages</a>
+      <a href="#gallery" onclick="closeMobileMenu()">Gallery</a>
+      <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+      <a
+        href="#"
+        class="btn btn-primary"
+        onclick="
+          closeMobileMenu();
+          openBookingModal(event, null);
+        "
+        >Book Now</a
+      >
+    </div>
+
+    <!-- ==================== HERO ==================== -->
+    <section id="hero">
+      <!-- Slideshow background -->
+      <div class="hero-slides">
+        <div class="hero-slide active"></div>
+        <div class="hero-slide"></div>
+        <div class="hero-slide"></div>
+        <div class="hero-slide"></div>
+      </div>
+
+      <div class="hero-content">
+        <!-- <div class="hero-badge">✦ <span>India's #1 Travel Partner</span> ✦</div> -->
+        <h1 class="hero-title">
+          Explore<br />
+          <em>Incredible India</em>
+        </h1>
+        <p class="hero-sub">
+          From snow-capped Himalayan peaks to sun-kissed Goan beaches — every
+          journey crafted to perfection, every memory made to last forever.
+        </p>
+        <div class="hero-actions">
+          <button
+            class="btn btn-primary btn-hero"
+            onclick="openBookingModal(event, null)"
+          >
+            ✈ Book Now
+          </button>
+          <a href="#packages" class="btn-hero-ghost">Explore Packages</a>
+        </div>
+      </div>
+
+      <!-- Slide dots -->
+      <div class="hero-dots">
+        <div class="hero-dot active" data-slide="0"></div>
+        <div class="hero-dot" data-slide="1"></div>
+        <div class="hero-dot" data-slide="2"></div>
+        <div class="hero-dot" data-slide="3"></div>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">12K+</div>
+          <div class="hero-stat-lbl">Happy Travellers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">85+</div>
+          <div class="hero-stat-lbl">Destinations</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">4.9★</div>
+          <div class="hero-stat-lbl">Average Rating</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">10Y</div>
+          <div class="hero-stat-lbl">Of Experience</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SEARCH BAR ==================== -->
+    <!-- <div id="search-bar" class="reveal">
+  <div class="search-field">
+    <label>📍 Destination</label>
+    <select>
+      <option>Choose Destination</option>
+      <option>Goa</option>
+      <option>Manali</option>
+      <option>Rajasthan</option>
+      <option>Kerala</option>
+      <option>Ladakh</option>
+      <option>Andaman</option>
+    </select>
+  </div>
+  <div class="search-field">
+    <label><i class="fas fa-calendar-days"></i>  Travel Date</label>
+    <input type="date"/>
+  </div>
+  <div class="search-field">
+    <label><i class="fas fa-users"></i> Travellers</label>
+    <select>
+      <option>1 Traveller</option>
+      <option>2 Travellers</option>
+      <option>3-5 Travellers</option>
+      <option>6+ Travellers</option>
+    </select>
+  </div>
+  <button class="btn btn-primary" style="height:48px;padding:0 28px;font-size:.92rem;">
+    🔍 Search
+  </button>
+</div> -->
+
+    <!-- ==================== PACKAGES ==================== -->
+    <section id="packages">
+      <div class="packages-header reveal">
+        <div>
+          <div class="section-tag">Top Picks</div>
+          <h2 class="section-title">
+            Our Signature <span>Tour Packages</span>
+          </h2>
+          <p class="section-sub">
+            Handcrafted itineraries by travel experts — every detail planned,
+            every moment unforgettable.
+          </p>
+        </div>
+        <a href="#contact" class="btn btn-outline">View All Packages →</a>
+      </div>
+
+      <div class="packages-grid">
+        <!-- Card 1: Goa -->
+        <div class="pkg-card reveal" style="transition-delay: 0.1s">
+          <div class="pkg-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&q=80"
+              alt="Goa Beach"
+            />
+            <span class="pkg-badge">Bestseller</span>
+            <!-- <span class="pkg-rating"><i class="fas fa-star"></i> 4.9</span> -->
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-meta">
+              <span><i class="fas fa-calendar-days"></i>  5 Days</span>
+              <span><i class="fas fa-users"></i> 2–10 People</span>
+              <span><i class="fas fa-hotel"></i> 4★ Hotel</span>
+            </div>
+            <h3 class="pkg-title">Golden Goa Beach Escape</h3>
+            <p class="pkg-desc">
+              Sun, surf, and serenity — explore vibrant beaches, Portuguese
+              heritage, and legendary seafood cuisine.
+            </p>
+          </div>
+          <div class="pkg-footer">
+            <div class="pkg-price">
+              <div class="pkg-price-label">Starting from</div>
+              <div class="pkg-price-amount">₹12,999</div>
+              <div class="pkg-price-per">per person</div>
+            </div>
+            <div class="pkg-actions">
+              <button
+                class="btn btn-outline btn-sm"
+                onclick="openDetailsModal(0)"
+              >
+                Details
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onclick="openBookingModal(event, 'Golden Goa Beach Escape')"
+              >
+                Book
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Manali -->
+        <div class="pkg-card reveal" style="transition-delay: 0.2s">
+          <div class="pkg-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&q=80"
+              alt="Manali Snow"
+            />
+            <span class="pkg-badge teal">Adventure</span>
+            <!-- <span class="pkg-rating">⭐ 4.8</span> -->
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-meta">
+              <span><i class="fas fa-calendar-days"></i>  7 Days</span>
+              <span><i class="fas fa-users"></i> 2–8 People</span>
+              <span><i class="fas fa-mountain"></i> Himalayan</span>
+            </div>
+            <h3 class="pkg-title">Manali Snow & Adventure</h3>
+            <p class="pkg-desc">
+              Trek through snow-laden valleys, ride the Rohtang Pass, and
+              experience the magic of Solang meadows.
+            </p>
+          </div>
+          <div class="pkg-footer">
+            <div class="pkg-price">
+              <div class="pkg-price-label">Starting from</div>
+              <div class="pkg-price-amount">₹18,499</div>
+              <div class="pkg-price-per">per person</div>
+            </div>
+            <div class="pkg-actions">
+              <button
+                class="btn btn-outline btn-sm"
+                onclick="openDetailsModal(1)"
+              >
+                Details
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onclick="openBookingModal(event, 'Manali Snow & Adventure')"
+              >
+                Book
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Rajasthan -->
+        <div class="pkg-card reveal" style="transition-delay: 0.3s">
+          <div class="pkg-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&q=80"
+              alt="Rajasthan"
+            />
+            <span
+              class="pkg-badge"
+              style="background: var(--gold); color: var(--ink)"
+              >Royal</span
+            >
+            <!-- <span class="pkg-rating">⭐ 4.9</span> -->
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-meta">
+              <span><i class="fas fa-calendar-days"></i>  8 Days</span>
+              <span><i class="fas fa-users"></i> 2–12 People</span>
+              <span><i class="fas fa-landmark"></i>Heritage</span>
+            </div>
+            <h3 class="pkg-title">Royal Rajasthan Circuit</h3>
+            <p class="pkg-desc">
+              Wander through golden forts, camel safaris in Jaisalmer, and
+              lakeside palaces in the land of kings.
+            </p>
+          </div>
+          <div class="pkg-footer">
+            <div class="pkg-price">
+              <div class="pkg-price-label">Starting from</div>
+              <div class="pkg-price-amount">₹22,999</div>
+              <div class="pkg-price-per">per person</div>
+            </div>
+            <div class="pkg-actions">
+              <button
+                class="btn btn-outline btn-sm"
+                onclick="openDetailsModal(2)"
+              >
+                Details
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onclick="openBookingModal(event, 'Royal Rajasthan Circuit')"
+              >
+                Book
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Kerala -->
+        <div class="pkg-card reveal" style="transition-delay: 0.1s">
+          <div class="pkg-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80"
+              alt="Kerala Backwaters"
+            />
+            <span class="pkg-badge teal">Nature</span>
+            <!-- <span class="pkg-rating">⭐ 4.8</span> -->
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-meta">
+              <span><i class="fas fa-calendar-days"></i>  6 Days</span>
+              <span><i class="fas fa-users"></i> 2–6 People</span>
+              <span><i class="fas fa-leaf"></i>  Eco-Resort</span>
+            </div>
+            <h3 class="pkg-title">Kerala Backwaters Bliss</h3>
+            <p class="pkg-desc">
+              Drift through emerald backwaters on a houseboat, sip fresh coconut
+              water, and unwind in Alleppey.
+            </p>
+          </div>
+          <div class="pkg-footer">
+            <div class="pkg-price">
+              <div class="pkg-price-label">Starting from</div>
+              <div class="pkg-price-amount">₹16,499</div>
+              <div class="pkg-price-per">per person</div>
+            </div>
+            <div class="pkg-actions">
+              <button
+                class="btn btn-outline btn-sm"
+                onclick="openDetailsModal(3)"
+              >
+                Details
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onclick="openBookingModal(event, 'Kerala Backwaters Bliss')"
+              >
+                Book
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5: Ladakh -->
+        <div class="pkg-card reveal" style="transition-delay: 0.2s">
+          <div class="pkg-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80"
+              alt="Ladakh"
+            />
+            <span class="pkg-badge">Premium</span>
+            <!-- <span class="pkg-rating">⭐ 5.0</span> -->
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-meta">
+              <span><i class="fas fa-calendar-days"></i>  9 Days</span>
+              <span><i class="fas fa-users"></i> 2–8 People</span>
+              <span> <i class="fas fa-person-biking"></i>Bike Route</span>
+            </div>
+            <h3 class="pkg-title">Ladakh Himalayan Odyssey</h3>
+            <p class="pkg-desc">
+              Navigate the world's highest motorable roads, pristine pangong
+              lake, and ancient Buddhist monasteries.
+            </p>
+          </div>
+          <div class="pkg-footer">
+            <div class="pkg-price">
+              <div class="pkg-price-label">Starting from</div>
+              <div class="pkg-price-amount">₹34,999</div>
+              <div class="pkg-price-per">per person</div>
+            </div>
+            <div class="pkg-actions">
+              <button
+                class="btn btn-outline btn-sm"
+                onclick="openDetailsModal(4)"
+              >
+                Details
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onclick="openBookingModal(event, 'Ladakh Himalayan Odyssey')"
+              >
+                Book
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6: Andaman -->
+        <div class="pkg-card reveal" style="transition-delay: 0.3s">
+          <div class="pkg-img-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80"
+              alt="Andaman"
+            />
+            <span class="pkg-badge teal">Island</span>
+            <!-- <span class="pkg-rating">⭐ 4.7</span> -->
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-meta">
+              <span><i class="fas fa-calendar-days"></i>  6 Days</span>
+              <span><i class="fas fa-users"></i> 2–8 People</span>
+              <span><i class="fas fa-person-swimming"></i> Scuba Diving</span>
+            </div>
+            <h3 class="pkg-title">Andaman Islands Paradise</h3>
+            <p class="pkg-desc">
+              Crystal-clear waters, vibrant coral reefs, and pristine beaches at
+              Havelock, Neil & Port Blair.
+            </p>
+          </div>
+          <div class="pkg-footer">
+            <div class="pkg-price">
+              <div class="pkg-price-label">Starting from</div>
+              <div class="pkg-price-amount">₹24,499</div>
+              <div class="pkg-price-per">per person</div>
+            </div>
+            <div class="pkg-actions">
+              <button
+                class="btn btn-outline btn-sm"
+                onclick="openDetailsModal(5)"
+              >
+                Details
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onclick="openBookingModal(event, 'Andaman Islands Paradise')"
+              >
+                Book
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WHY US ==================== -->
+    <section id="why-us">
+      <div class="why-inner">
+        <div class="why-text reveal-left">
+          <div class="section-tag">Why WanderIndia</div>
+          <h2 class="section-title" style="color: #fff">
+            Travel Smarter,<br /><span style="color: var(--gold-lt)"
+              >Live Better</span
+            >
+          </h2>
+          <p class="section-sub" style="color: rgba(255, 255, 255, 0.7)">
+            A decade of exploring India's every corner so you experience only
+            the finest. No hidden costs, no compromises — just extraordinary
+            journeys.
+          </p>
+          <div class="why-features">
+            <div class="why-feat">
+              <div class="why-feat-icon">
+                <i class="fas fa-shield-halved"></i>
+              </div>
+              <h4>100% Secure Booking</h4>
+              <p>
+                Encrypted payments & zero-risk cancellation policies for peace
+                of mind.
+              </p>
+            </div>
+            <div class="why-feat">
+              <div class="why-feat-icon">
+                <i class="fas fa-map-location-dot"></i>
+              </div>
+              <h4>Expert Travel Guides</h4>
+              <p>
+                Local experts who know every hidden gem, shortcut, and secret
+                spot.
+              </p>
+            </div>
+            <div class="why-feat">
+              <div class="why-feat-icon">
+                <i class="fas fa-indian-rupee-sign"></i>
+              </div>
+              <h4>Best Price Guarantee</h4>
+              <p>
+                Find it cheaper elsewhere? We'll beat the price — guaranteed.
+              </p>
+            </div>
+            <div class="why-feat">
+              <div class="why-feat-icon"><i class="fas fa-headset"></i></div>
+              <h4>24/7 Support</h4>
+              <p>Round-the-clock assistance wherever you are in India.</p>
+            </div>
+          </div>
+        </div>
+        <div class="why-visual reveal-right">
+          <div class="why-img-grid">
+            <img
+              src="https://images.unsplash.com/photo-1585506942812-e72b29cef752?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dGFqJTIwbWFoYWx8ZW58MHx8MHx8fDA%3D"
+              alt="India"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1715457573748-8e8a70b2c1be?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGFsJTIwbGFrZSUyMHNyaW5hZ2FyfGVufDB8fDB8fHww"
+              alt="India"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1593118845043-359e5f628214?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGFkYWtofGVufDB8fDB8fHww"
+              alt="India"
+            />
+          </div>
+          <!-- <div class="why-award">
+        <div class="why-award-num">12K+</div>
+        <div class="why-award-txt">Happy Travellers<br>& Counting 🎉</div>
+      </div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GALLERY ==================== -->
+    <section id="gallery">
+      <div class="gallery-header reveal">
+        <div class="section-tag">Visual Journey</div>
+        <h2 class="section-title">India Through <span>Our Lens</span></h2>
+        <p class="section-sub">
+          A glimpse of the magic awaiting you — captured by our travellers
+          across the country.
+        </p>
+      </div>
+
+      <div class="carousel-wrap reveal">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide">
+            <img
+              src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&q=80"
+              alt="Taj Mahal"
+            />
+            <div class="carousel-slide-overlay">
+              <h4>Taj Mahal, Agra</h4>
+              <p>A monument to eternal love</p>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img
+              src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&q=80"
+              alt="Goa"
+            />
+            <div class="carousel-slide-overlay">
+              <h4>Palolem Beach, Goa</h4>
+              <p>Where every sunset is golden</p>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img
+              src="https://images.unsplash.com/photo-1477587458883-47145ed94245?w=600&q=80"
+              alt="Jaipur"
+            />
+            <div class="carousel-slide-overlay">
+              <h4>Amber Fort, Jaipur</h4>
+              <p>Royal splendour of Rajputana</p>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img
+              src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80"
+              alt="Himalayas"
+            />
+            <div class="carousel-slide-overlay">
+              <h4>The Himalayas</h4>
+              <p>Where earth meets the sky</p>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img
+              src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&q=80"
+              alt="Kerala"
+            />
+            <div class="carousel-slide-overlay">
+              <h4>Alleppey Backwaters</h4>
+              <p>God's own country at its finest</p>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <img
+              src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&q=80"
+              alt="Varanasi"
+            />
+            <div class="carousel-slide-overlay">
+              <h4>Varanasi Ghats</h4>
+              <p>The eternal city of rivers</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-btn prev" id="carouselPrev">‹</button>
+        <button class="carousel-btn next" id="carouselNext">›</button>
+      </div>
+      <div class="carousel-progress" id="carouselDots"></div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS ==================== -->
+    <section id="testimonials">
+      <div class="testi-inner">
+        <div class="testi-header reveal">
+          <div class="section-tag">Real Stories</div>
+          <h2 class="section-title">What Our <span>Travellers Say</span></h2>
+          <p class="section-sub" style="margin: 0 auto">
+            Stories from the hearts of explorers who journeyed with us.
+          </p>
+        </div>
+        <div class="testi-grid">
+          <div class="testi-card reveal" style="transition-delay: 0.1s">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">
+              "The Ladakh trip was beyond words. Every detail was perfectly
+              arranged — the homestays, the monastery visits, even the weather
+              seemed to cooperate!"
+            </p>
+            <div class="testi-author">
+              <img
+                class="testi-avatar"
+                src="https://i.pravatar.cc/46?img=11"
+                alt="Priya"
+              />
+              <div>
+                <div class="testi-name">Priya Sharma</div>
+                <div class="testi-from">📍 Mumbai, Maharashtra</div>
+              </div>
+            </div>
+          </div>
+          <div class="testi-card reveal" style="transition-delay: 0.2s">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">
+              "Goa trip with my partner was absolutely magical. WanderIndia's
+              beach resort selection was impeccable — woke up to ocean views
+              every morning!"
+            </p>
+            <div class="testi-author">
+              <img
+                class="testi-avatar"
+                src="https://i.pravatar.cc/46?img=33"
+                alt="Rahul"
+              />
+              <div>
+                <div class="testi-name">Rahul Mehta</div>
+                <div class="testi-from">📍 Delhi, NCR</div>
+              </div>
+            </div>
+          </div>
+          <div class="testi-card reveal" style="transition-delay: 0.3s">
+            <div class="testi-stars">★★★★★</div>
+            <p class="testi-text">
+              "The Royal Rajasthan package was extraordinary. Staying in a
+              palace hotel in Udaipur and riding camels in Jaisalmer —
+              absolutely unforgettable!"
+            </p>
+            <div class="testi-author">
+              <img
+                class="testi-avatar"
+                src="https://i.pravatar.cc/46?img=47"
+                alt="Anjali"
+              />
+              <div>
+                <div class="testi-name">Anjali Nair</div>
+                <div class="testi-from">📍 Bengaluru, Karnataka</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section id="contact">
+      <div class="contact-info reveal-left">
+        <div class="section-tag">Get In Touch</div>
+        <h2 class="section-title">
+          Plan Your Dream <span>Journey Today</span>
+        </h2>
+        <p class="section-sub">
+          Our travel experts are ready to craft the perfect itinerary tailored
+          just for you.
+        </p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon">  <i class="fas fa-phone"></i>
+</div>
+            <div>
+              <h4>Call Us</h4>
+              <p>+91 98765 43210</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">  <i class="fas fa-envelope"></i>
+</div>
+            <div>
+              <h4>Email Us</h4>
+              <p>hello@wanderindia.com</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">  <i class="fas fa-location-dot"></i>
+</div>
+            <div>
+              <h4>Visit Us</h4>
+              <p>Connaught Place, New Delhi – 110001</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form reveal-right">
+        <h3>Send Us a Message</h3>
+        <form id="contactForm" onsubmit="submitContact(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" id="cName" placeholder="Raj Kumar" />
+              <div class="form-error" id="cNameErr">
+                Please enter your name.
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" id="cPhone" placeholder="+91 98765 43210" />
+              <div class="form-error" id="cPhoneErr">
+                Enter a valid 10-digit number.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="cEmail" placeholder="raj@email.com" />
+            <div class="form-error" id="cEmailErr">
+              Enter a valid email address.
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Interested Package</label>
+            <select id="cPackage">
+              <option value="">-- Select a Package --</option>
+              <option>Golden Goa Beach Escape</option>
+              <option>Manali Snow &amp; Adventure</option>
+              <option>Royal Rajasthan Circuit</option>
+              <option>Kerala Backwaters Bliss</option>
+              <option>Ladakh Himalayan Odyssey</option>
+              <option>Andaman Islands Paradise</option>
+              <option>Custom Package</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Your Message (Optional)</label>
+            <textarea
+              id="cMsg"
+              placeholder="Tell us your travel dates, group size, special requests..."
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="width: 100%; justify-content: center; padding: 15px"
+          >
+            Send Message ✈
+          </button>
+        </form>
+        <div
+          id="contactSuccess"
+          style="display: none; text-align: center; padding: 20px"
+        >
+          <div style="font-size: 3rem; margin-bottom: 12px">🎉</div>
+          <h3
+            style="
+              font-family: &quot;Playfair Display&quot;, serif;
+              font-size: 1.4rem;
+              margin-bottom: 8px;
+            "
+          >
+            Message Sent!
+          </h3>
+          <p style="color: var(--muted)">
+            Our team will reach out within 24 hours.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="nav-logo">
+            Wander<span style="color: var(--gold)">India</span>
+          </div>
+          <p>
+            Crafting extraordinary journeys across India's most breathtaking
+            destinations. Your adventure starts here.
+          </p>
+          <div class="footer-socials">
+            <a class="footer-social" href="#" title="Instagram">
+  <i class="fab fa-instagram"></i>
+</a>
+
+<a class="footer-social" href="#" title="Facebook">
+  <i class="fab fa-facebook-f"></i>
+</a>
+
+<a class="footer-social" href="#" title="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<a class="footer-social" href="#" title="YouTube">
+  <i class="fab fa-youtube"></i>
+</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#packages">Packages</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Destinations</h4>
+          <ul>
+            <li><a href="#">Goa</a></li>
+            <li><a href="#">Manali</a></li>
+            <li><a href="#">Rajasthan</a></li>
+            <li><a href="#">Kerala</a></li>
+            <li><a href="#">Ladakh</a></li>
+            <li><a href="#">Andaman</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+            <li>
+              <a href="mailto:hello@wanderindia.com">hello@wanderindia.com</a>
+            </li>
+            <li><a href="#">Connaught Place, New Delhi</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 WanderIndia. All rights reserved. Made with <b>Jayant Developers ❤️</b></p>
+        <p>Privacy Policy · Terms of Service · Refund Policy</p>
+      </div>
+    </footer>
+
+    <!-- ==================== BOOKING MODAL ==================== -->
+    <div class="modal-overlay" id="bookingModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal('bookingModal')">
+          ✕
+        </button>
+        <div class="modal-form" id="bookingFormWrap">
+          <h2 class="modal-title">Book Your Trip ✈</h2>
+          <p class="modal-sub">
+            Fill in your details and our expert will call you back within 2
+            hours.
+          </p>
+          <form id="bookingForm" onsubmit="submitBooking(event)">
+            <div class="form-group">
+              <label>Full Name *</label>
+              <input type="text" id="bName" placeholder="Your full name" />
+              <div class="form-error" id="bNameErr">
+                Please enter your name.
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Phone Number *</label>
+                <input type="tel" id="bPhone" placeholder="+91 98765 43210" />
+                <div class="form-error" id="bPhoneErr">
+                  Enter valid phone number.
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Email Address *</label>
+                <input type="email" id="bEmail" placeholder="you@email.com" />
+                <div class="form-error" id="bEmailErr">Enter valid email.</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Select Package *</label>
+              <select id="bPackage">
+                <option value="">-- Choose a Package --</option>
+                <option>Golden Goa Beach Escape</option>
+                <option>Manali Snow &amp; Adventure</option>
+                <option>Royal Rajasthan Circuit</option>
+                <option>Kerala Backwaters Bliss</option>
+                <option>Ladakh Himalayan Odyssey</option>
+                <option>Andaman Islands Paradise</option>
+                <option>Custom Package</option>
+              </select>
+              <div class="form-error" id="bPkgErr">
+                Please select a package.
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Message (Optional)</label>
+              <textarea
+                id="bMsg"
+                placeholder="Travel dates, group size, special requests..."
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="
+                width: 100%;
+                justify-content: center;
+                padding: 15px;
+                font-size: 1rem;
+              "
+            >
+              Confirm Booking 🎉
+            </button>
+          </form>
+        </div>
+        <div class="modal-success" id="bookingSuccess">
+          <div class="modal-success-icon">🎊</div>
+          <h3>Booking Confirmed!</h3>
+          <p style="color: var(--muted); margin-top: 8px">
+            Our travel expert will call you within 2 hours.<br />Get ready for
+            an incredible journey!
+          </p>
+          <button
+            class="btn btn-primary"
+            style="margin-top: 24px"
+            onclick="closeModal('bookingModal')"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== DETAILS MODAL ==================== -->
+    <div class="modal-overlay" id="detailsModal">
+      <div class="modal details-modal">
+        <button class="modal-close" onclick="closeModal('detailsModal')">
+          ✕
+        </button>
+        <div id="detailsContent"></div>
+      </div>
+    </div>
+
+    <!-- ==================== FLOATING BUTTONS ==================== -->
+    <div class="float-btns">
+      <a
+        class="float-btn float-wa"
+        href="https://wa.me/919876543210?text=Hi!%20I%20want%20to%20book%20a%20tour"
+        target="_blank"
+      >
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat</span>
+      </a>
+
+      <a class="float-btn float-call" href="tel:+919876543210">
+        <i class="fas fa-phone"></i>
+        <span>Call</span>
+      </a>
+
+      <a
+        class="float-btn float-ig"
+        href="https://instagram.com"
+        target="_blank"
+      >
+        <i class="fab fa-instagram"></i>
+        <span>Instagram</span>
+      </a>
+    </div>
+
+    <!-- ======================= JAVASCRIPT ======================= -->
+    <script>
+      /* ─── Package Data ─────────────────────────────────────── */
+      const packages = [
+        {
+          name: "Golden Goa Beach Escape",
+          image:
+            "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=700&q=80",
+          duration: "5 Days / 4 Nights",
+          group: "2–10 People",
+          price: "₹12,999",
+          itinerary: [
+            {
+              day: "Day 1",
+              title: "Arrival & North Goa Beaches",
+              items: [
+                "Arrive at Goa Airport, check-in to 4-star beach resort",
+                "Visit Calangute & Baga Beach – India's most famous strips",
+                "Sunset at Anjuna Flea Market",
+                "Welcome dinner at a beachside shack with seafood",
+              ],
+            },
+            {
+              day: "Day 2",
+              title: "Fort Aguada & Water Sports",
+              items: [
+                "Morning visit to Fort Aguada – 17th century Portuguese fort",
+                "Water sports at Candolim – jet-skiing, parasailing, banana boat",
+                "Afternoon sunbathing & swimming at Sinquerim Beach",
+                "Evening pub crawl on Tito's Lane",
+              ],
+            },
+            {
+              day: "Day 3",
+              title: "South Goa Serenity",
+              items: [
+                "Drive to South Goa – calm, luxury vibe",
+                "Visit Palolem Beach – pristine white sands",
+                "Colva & Benaulim beaches (quiet & beautiful)",
+                "Sunset cruise on the Chapora River",
+              ],
+            },
+            {
+              day: "Day 4",
+              title: "Old Goa Heritage & Spice Plantation",
+              items: [
+                "Basilica of Bom Jesus – UNESCO World Heritage Site",
+                "Se Cathedral – one of Asia's largest churches",
+                "Tropical Spice Plantation tour with lunch",
+                "Dudhsagar Waterfall trek (optional)",
+              ],
+            },
+            {
+              day: "Day 5",
+              title: "Departure",
+              items: [
+                "Leisurely morning on the beach",
+                "Last-minute souvenir shopping at Mapusa Market",
+                "Drop to Goa Airport / Railway Station",
+                "Safe & happy journey home!",
+              ],
+            },
+          ],
+          includes: [
+            "Flight Tickets (Optional)",
+            "4-Star Hotel Stay",
+            "Daily Breakfast & Dinner",
+            "AC Cab Transport",
+            "Water Sports (Day 2)",
+            "Expert Tour Guide",
+            "Heritage Entry Tickets",
+            "24/7 Support",
+          ],
+        },
+        {
+          name: "Manali Snow & Adventure",
+          image:
+            "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=700&q=80",
+          duration: "7 Days / 6 Nights",
+          group: "2–8 People",
+          price: "₹18,499",
+          itinerary: [
+            {
+              day: "Day 1",
+              title: "Arrival in Manali",
+              items: [
+                "Arrive from Delhi (Volvo bus or flight to Bhuntar)",
+                "Check-in to cozy mountain lodge in Old Manali",
+                "Evening walk on Mall Road",
+                "Welcome bonfire & local Himachali dinner",
+              ],
+            },
+            {
+              day: "Day 2",
+              title: "Solang Valley Adventures",
+              items: [
+                "Drive to Solang Valley – the playground of adventure",
+                "Paragliding, zorbing, rope sliding",
+                "Snow time & photography at the valley",
+                "Lunch at a local dhaba with mountain views",
+              ],
+            },
+            {
+              day: "Day 3",
+              title: "Rohtang Pass",
+              items: [
+                "Early morning drive to Rohtang Pass (3,978m)",
+                "Snow activities – snowball fight, sledging",
+                "Visit Beas Kund trailhead",
+                "Back to hotel by evening for hot dinner",
+              ],
+            },
+            {
+              day: "Day 4",
+              title: "Naggar & Great Himalayan National Park",
+              items: [
+                "Visit Naggar Castle – 500-year-old marvel",
+                "Roerich Art Gallery museum",
+                "Nature trail in Kullu Valley",
+                "River-side camping setup",
+              ],
+            },
+            {
+              day: "Day 5",
+              title: "Camping & River Rafting",
+              items: [
+                "White-water rafting on the Beas River",
+                "Riverside picnic lunch",
+                "Return camp – bonfire, stargazing night",
+                "Guitar session with fellow travellers",
+              ],
+            },
+            {
+              day: "Day 6",
+              title: "Kullu & Local Market",
+              items: [
+                "Kullu Dussehra Fair viewing",
+                "Famous Kullu shawl and craft markets",
+                "Manikaran Sahib Gurudwara visit",
+                "Farewell Himachali dinner in Manali",
+              ],
+            },
+            {
+              day: "Day 7",
+              title: "Departure",
+              items: [
+                "Early morning sunrise hike optional",
+                "Checkout & drive to Bhuntar Airport / bus stand",
+                "Take memories, not just photos – goodbye Manali!",
+              ],
+            },
+          ],
+          includes: [
+            "Volvo AC Bus (Delhi–Manali)",
+            "6N Mountain Lodge",
+            "All Meals Included",
+            "Adventure Activities",
+            "Rohtang Permit",
+            "River Rafting",
+            "Camping Night",
+            "24/7 Guide Support",
+          ],
+        },
+        {
+          name: "Royal Rajasthan Circuit",
+          image:
+            "https://images.unsplash.com/photo-1477587458883-47145ed94245?w=700&q=80",
+          duration: "8 Days / 7 Nights",
+          group: "2–12 People",
+          price: "₹22,999",
+          itinerary: [
+            {
+              day: "Day 1–2",
+              title: "Jaipur – The Pink City",
+              items: [
+                "Amber Fort – a UNESCO World Heritage marvel",
+                "City Palace & Hawa Mahal",
+                "Jantar Mantar astronomical observatory",
+                "Shopping at Johari & Bapu Bazaar",
+              ],
+            },
+            {
+              day: "Day 3",
+              title: "Jodhpur – The Blue City",
+              items: [
+                "Drive from Jaipur to Jodhpur (6 hrs)",
+                "Mehrangarh Fort – one of India's largest forts",
+                "Jaswant Thada cenotaph",
+                "Explore the blue-painted old city lanes",
+              ],
+            },
+            {
+              day: "Day 4–5",
+              title: "Jaisalmer – The Golden City",
+              items: [
+                "Drive to Jaisalmer through Thar Desert",
+                "Jaisalmer Fort – a living fort with residents",
+                "Sam Sand Dunes – camel safari at sunset",
+                "Desert cultural night – folk dances & music",
+                "Luxury Desert Camp overnight",
+              ],
+            },
+            {
+              day: "Day 6–7",
+              title: "Udaipur – The City of Lakes",
+              items: [
+                "Drive to Udaipur via Ranakpur Temples",
+                "City Palace Museum",
+                "Boat ride on Lake Pichola",
+                "Sajjangarh Monsoon Palace at sunset",
+                "Royal heritage dinner",
+              ],
+            },
+            {
+              day: "Day 8",
+              title: "Departure",
+              items: [
+                "Morning visit to Saheliyon ki Bari gardens",
+                "Checkout & transfer to Udaipur Airport",
+              ],
+            },
+          ],
+          includes: [
+            "7N Heritage/Palace Hotel",
+            "AC Car with Driver",
+            "All Breakfasts",
+            "Camel Safari",
+            "Desert Camp Night",
+            "Boat Ride",
+            "All Entry Tickets",
+            "Expert Heritage Guide",
+          ],
+        },
+        {
+          name: "Kerala Backwaters Bliss",
+          image:
+            "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=700&q=80",
+          duration: "6 Days / 5 Nights",
+          group: "2–6 People",
+          price: "₹16,499",
+          itinerary: [
+            {
+              day: "Day 1",
+              title: "Kochi – Queen of the Arabian Sea",
+              items: [
+                "Arrive at Cochin Airport",
+                "Fort Kochi walk – Chinese Fishing Nets",
+                "Dutch Palace & Jewish Synagogue",
+                "Kerala Kathakali performance evening",
+              ],
+            },
+            {
+              day: "Day 2",
+              title: "Munnar – Tea Gardens",
+              items: [
+                "Drive to Munnar through tea plantations",
+                "Tea Museum & factory tour",
+                "Eravikulam National Park (Nilgiri Tahr)",
+                "Mattupetty Dam & Echo Point",
+              ],
+            },
+            {
+              day: "Day 3–4",
+              title: "Alleppey Houseboat",
+              items: [
+                "Check into private luxury houseboat",
+                "Cruise through tranquil backwater canals",
+                "Watch village life along the banks",
+                "Sunset over Vembanad Lake",
+                "Fresh Kerala fish curry dinner on board",
+                "Overnight on the houseboat",
+              ],
+            },
+            {
+              day: "Day 5",
+              title: "Kovalam Beach",
+              items: [
+                "Drive to Kovalam Beach – crescent beach paradise",
+                "Lighthouse Beach sunset",
+                "Ayurvedic spa & massage (optional)",
+                "Seafood dinner by the shore",
+              ],
+            },
+            {
+              day: "Day 6",
+              title: "Departure from Trivandrum",
+              items: [
+                "Morning yoga on the beach",
+                "Transfer to Trivandrum Airport / Railway Station",
+              ],
+            },
+          ],
+          includes: [
+            "5N Stays (Resort + Houseboat)",
+            "AC Transport",
+            "Houseboat Full Board",
+            "Kathakali Show",
+            "Tea Factory Tour",
+            "Ayurvedic Welcome Ritual",
+            "All Breakfasts",
+            "24/7 Concierge",
+          ],
+        },
+        {
+          name: "Ladakh Himalayan Odyssey",
+          image:
+            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=700&q=80",
+          duration: "9 Days / 8 Nights",
+          group: "2–8 People",
+          price: "₹34,999",
+          itinerary: [
+            {
+              day: "Day 1–2",
+              title: "Arrival & Acclimatization in Leh",
+              items: [
+                "Fly into Leh (3,500m altitude)",
+                "Full day rest for acclimatization – very important",
+                "Hall of Fame War Museum",
+                "Shanti Stupa sunset panorama",
+              ],
+            },
+            {
+              day: "Day 3",
+              title: "Leh Palace & Monasteries",
+              items: [
+                "Leh Palace – 17th century royal residence",
+                "Thiksey Monastery – 12-storey hilltop complex",
+                "Hemis Monastery – largest in Ladakh",
+                "Shey Palace ruins",
+              ],
+            },
+            {
+              day: "Day 4–5",
+              title: "Pangong Tso Lake",
+              items: [
+                "Drive along the famous Srinagar–Leh Highway",
+                "Chang La Pass (5,360m) – 3rd highest motorable road",
+                "Pangong Lake – where 3 Idiots was filmed!",
+                "Overnight camping by the lakeside",
+                "Sunrise over the blue-green waters of Pangong",
+              ],
+            },
+            {
+              day: "Day 6",
+              title: "Nubra Valley",
+              items: [
+                "Drive via Khardung La (world's highest motorable road, 5,602m)",
+                "Diskit Monastery & Giant Maitreya Buddha",
+                "Hunder Sand Dunes – double-humped Bactrian Camels",
+                "Overnight in Nubra Valley camp",
+              ],
+            },
+            {
+              day: "Day 7–8",
+              title: "Zanskar Valley & Trekking",
+              items: [
+                "Scenic drive to Zanskar region",
+                "Stongde & Karsha Monasteries",
+                "Light trekking in Zanskar Valley",
+                "Magnetic Hill – gravity-defying experience",
+                "Gurudwara Patthar Sahib",
+              ],
+            },
+            {
+              day: "Day 9",
+              title: "Departure from Leh",
+              items: [
+                "Morning puja at a monastery",
+                "Final shopping at Leh Market – pashmina & turquoise",
+                "Transfer to Leh Airport – carry your memories!",
+              ],
+            },
+          ],
+          includes: [
+            "Flight Delhi–Leh–Delhi",
+            "8N Premium Camps & Hotels",
+            "All Meals",
+            "Private SUV",
+            "Trekking Permits",
+            "Inner Line Permits",
+            "Camel Ride (Nubra)",
+            "Expert Mountain Guide",
+          ],
+        },
+        {
+          name: "Andaman Islands Paradise",
+          image:
+            "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=700&q=80",
+          duration: "6 Days / 5 Nights",
+          group: "2–8 People",
+          price: "₹24,499",
+          itinerary: [
+            {
+              day: "Day 1",
+              title: "Port Blair Arrival",
+              items: [
+                "Fly into Port Blair (Veer Savarkar Airport)",
+                "Cellular Jail – Sound & Light Show evening",
+                "Ross Island – British colonial ruins",
+                "Corbyn's Cove Beach sunset",
+              ],
+            },
+            {
+              day: "Day 2",
+              title: "Neil Island",
+              items: [
+                "Ferry to Neil Island (1.5 hrs)",
+                "Natural Bridge – unique rock formation",
+                "Bharatpur Beach – crystal clear & calm",
+                "Laxmanpur Beach sunset photography",
+              ],
+            },
+            {
+              day: "Day 3–4",
+              title: "Havelock Island – Radhanagar Beach",
+              items: [
+                "Ferry to Havelock Island",
+                "Radhanagar Beach – Asia's best beach (Time Magazine)",
+                "Elephant Beach snorkelling & coral reefs",
+                "Scuba Diving in Neil's Cove (optional)",
+                "Glass-bottom boat ride",
+                "Overnight at beach-view resort",
+              ],
+            },
+            {
+              day: "Day 5",
+              title: "Sea Walk & Jet Ski",
+              items: [
+                "Sea walking at Elephant Beach",
+                "Jet skiing & banana boat at Havelock",
+                "Return ferry to Port Blair",
+                "Shopping at Aberdeen Bazaar",
+              ],
+            },
+            {
+              day: "Day 6",
+              title: "Departure",
+              items: [
+                "Sunrise at Chidiya Tapu (Bird Island)",
+                "Drop to Port Blair Airport – see you again, Andaman!",
+              ],
+            },
+          ],
+          includes: [
+            "Flights (Optional)",
+            "5N Resorts",
+            "All Ferry Transfers",
+            "Scuba Diving Intro",
+            "Sea Walking",
+            "Snorkelling Gear",
+            "Daily Breakfast",
+            "Island Guide",
+          ],
+        },
+      ];
+
+      /* ─── Hero Slideshow ───────────────────────────────────── */
+      const slides = document.querySelectorAll(".hero-slide");
+      const dots = document.querySelectorAll(".hero-dot");
+      let current = 0,
+        slideTimer;
+
+      function goToSlide(n) {
+        slides[current].classList.remove("active");
+        dots[current].classList.remove("active");
+        current = (n + slides.length) % slides.length;
+        slides[current].classList.add("active");
+        dots[current].classList.add("active");
+      }
+      function startSlideshow() {
+        slideTimer = setInterval(() => goToSlide(current + 1), 5000);
+      }
+      dots.forEach((d) => {
+        d.addEventListener("click", () => {
+          clearInterval(slideTimer);
+          goToSlide(+d.dataset.slide);
+          startSlideshow();
+        });
+      });
+      startSlideshow();
+
+      /* ─── Navbar scroll ────────────────────────────────────── */
+      const navbar = document.getElementById("navbar");
+      window.addEventListener("scroll", () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 80);
+        /* Active link highlight */
+        const sections = ["hero", "packages", "gallery", "contact"];
+        const links = document.querySelectorAll(".nav-links a");
+        sections.forEach((id, i) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 120 && rect.bottom >= 120 && links[i]) {
+            links.forEach((l) => l.classList.remove("active"));
+            links[i].classList.add("active");
+          }
+        });
+      });
+
+      /* ─── Mobile Menu ──────────────────────────────────────── */
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const overlay = document.getElementById("overlay");
+
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("open");
+        mobileMenu.classList.toggle("open");
+        overlay.classList.toggle("open");
+      });
+      document
+        .getElementById("closeMenu")
+        .addEventListener("click", closeMobileMenu);
+      overlay.addEventListener("click", closeMobileMenu);
+
+      function closeMobileMenu() {
+        hamburger.classList.remove("open");
+        mobileMenu.classList.remove("open");
+        overlay.classList.remove("open");
+      }
+
+      /* ─── Scroll Reveal ────────────────────────────────────── */
+      const revealEls = document.querySelectorAll(
+        ".reveal, .reveal-left, .reveal-right",
+      );
+      const revealObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("visible");
+              revealObs.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.12 },
+      );
+      revealEls.forEach((el) => revealObs.observe(el));
+
+      /* ─── Gallery Carousel ─────────────────────────────────── */
+      const track = document.getElementById("carouselTrack");
+      const dotsWrap = document.getElementById("carouselDots");
+      const slides2 = track.querySelectorAll(".carousel-slide");
+      let carouselIndex = 0,
+        carouselTimer,
+        slidesPerView = 3;
+
+      function getSlidesPerView() {
+        return window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+      }
+
+      function buildDots() {
+        slidesPerView = getSlidesPerView();
+        const count = Math.ceil(slides2.length / slidesPerView);
+        dotsWrap.innerHTML = "";
+        for (let i = 0; i < count; i++) {
+          const d = document.createElement("div");
+          d.className = "c-dot" + (i === 0 ? " active" : "");
+          d.addEventListener("click", () => goCarousel(i));
+          dotsWrap.appendChild(d);
+        }
+      }
+
+      function goCarousel(idx) {
+        slidesPerView = getSlidesPerView();
+        const maxIdx = Math.ceil(slides2.length / slidesPerView) - 1;
+        carouselIndex = Math.max(0, Math.min(idx, maxIdx));
+        const slideW = slides2[0].getBoundingClientRect().width + 20;
+        track.style.transform = `translateX(-${carouselIndex * slidesPerView * slideW}px)`;
+        document
+          .querySelectorAll(".c-dot")
+          .forEach((d, i) => d.classList.toggle("active", i === carouselIndex));
+      }
+
+      document.getElementById("carouselPrev").addEventListener("click", () => {
+        clearInterval(carouselTimer);
+        goCarousel(carouselIndex - 1);
+        startCarousel();
+      });
+      document.getElementById("carouselNext").addEventListener("click", () => {
+        clearInterval(carouselTimer);
+        goCarousel(carouselIndex + 1);
+        startCarousel();
+      });
+
+      function startCarousel() {
+        carouselTimer = setInterval(() => {
+          const max = Math.ceil(slides2.length / getSlidesPerView()) - 1;
+          goCarousel(carouselIndex >= max ? 0 : carouselIndex + 1);
+        }, 3500);
+      }
+
+      buildDots();
+      startCarousel();
+      window.addEventListener("resize", () => {
+        buildDots();
+        goCarousel(0);
+      });
+
+      /* ─── Booking Modal ────────────────────────────────────── */
+      function openBookingModal(e, pkgName) {
+        e.preventDefault();
+        document.getElementById("bookingSuccess").classList.remove("show");
+        document.getElementById("bookingFormWrap").classList.remove("hidden");
+        if (pkgName) {
+          const sel = document.getElementById("bPackage");
+          for (let opt of sel.options) {
+            if (opt.text === pkgName) {
+              opt.selected = true;
+              break;
+            }
+          }
+        }
+        document.getElementById("bookingModal").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+        document.body.style.overflow = "";
+      }
+
+      /* Close modals on overlay click */
+      document.querySelectorAll(".modal-overlay").forEach((ov) => {
+        ov.addEventListener("click", (e) => {
+          if (e.target === ov) closeModal(ov.id);
+        });
+      });
+
+      /* ─── Booking Form Validation ──────────────────────────── */
+      function submitBooking(e) {
+        e.preventDefault();
+        let valid = true;
+
+        const name = document.getElementById("bName");
+        const phone = document.getElementById("bPhone");
+        const email = document.getElementById("bEmail");
+        const pkg = document.getElementById("bPackage");
+
+        const show = (id, show) =>
+          document.getElementById(id).classList.toggle("show", show);
+
+        if (!name.value.trim() || name.value.trim().length < 2) {
+          show("bNameErr", true);
+          valid = false;
+        } else show("bNameErr", false);
+
+        if (!/^[\+]?[0-9]{10,13}$/.test(phone.value.replace(/\s/g, ""))) {
+          show("bPhoneErr", true);
+          valid = false;
+        } else show("bPhoneErr", false);
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+          show("bEmailErr", true);
+          valid = false;
+        } else show("bEmailErr", false);
+
+        if (!pkg.value) {
+          show("bPkgErr", true);
+          valid = false;
+        } else show("bPkgErr", false);
+
+        if (valid) {
+          document.getElementById("bookingFormWrap").classList.add("hidden");
+          document.getElementById("bookingSuccess").classList.add("show");
+          e.target.reset();
+        }
+      }
+
+      /* ─── Contact Form ─────────────────────────────────────── */
+      function submitContact(e) {
+        e.preventDefault();
+        let valid = true;
+
+        const name = document.getElementById("cName");
+        const phone = document.getElementById("cPhone");
+        const email = document.getElementById("cEmail");
+
+        const show = (id, s) =>
+          document.getElementById(id).classList.toggle("show", s);
+
+        if (!name.value.trim() || name.value.trim().length < 2) {
+          show("cNameErr", true);
+          valid = false;
+        } else show("cNameErr", false);
+        if (!/^[\+]?[0-9]{10,13}$/.test(phone.value.replace(/\s/g, ""))) {
+          show("cPhoneErr", true);
+          valid = false;
+        } else show("cPhoneErr", false);
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+          show("cEmailErr", true);
+          valid = false;
+        } else show("cEmailErr", false);
+
+        if (valid) {
+          document.getElementById("contactForm").style.display = "none";
+          document.getElementById("contactSuccess").style.display = "block";
+        }
+      }
+
+      /* ─── Trip Details Modal ───────────────────────────────── */
+      function openDetailsModal(idx) {
+        const pkg = packages[idx];
+        const itinerary = pkg.itinerary
+          .map(
+            (day, i) => `
+      <div class="accordion-item">
+        <div class="accordion-head" onclick="toggleAccordion(this)">
+          <div class="accordion-day">
+            <div class="day-badge">${day.day}</div>
+            <div class="accordion-day-title">${day.title}</div>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body ${i === 0 ? "open" : ""}">
+          <ul>
+            ${day.items.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        </div>
+      </div>
+    `,
+          )
+          .join("");
+
+        const includesHTML = pkg.includes
+          .map(
+            (item) => `
+      <div class="include-item"><span>✓</span> ${item}</div>
+    `,
+          )
+          .join("");
+
+        document.getElementById("detailsContent").innerHTML = `
+      <h2 class="details-title">${pkg.name}</h2>
+      <div class="details-meta">
+        <span>
+  <i class="fas fa-calendar-days"></i> ${pkg.duration}
+</span>
+
+<span>
+  <i class="fas fa-users"></i> ${pkg.group}
+</span>
+
+<span>
+  <i class="fas fa-indian-rupee-sign"></i> From ${pkg.price}/person
+</span>
+      </div>
+      <img class="details-img" src="${pkg.image}" alt="${pkg.name}"/>
+      <div>${itinerary}</div>
+      <div class="includes-section">
+        <h4>✦ What's Included</h4>
+        <div class="includes-grid">${includesHTML}</div>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;margin-top:24px;font-size:.95rem"
+        onclick="closeModal('detailsModal'); openBookingModal(event, '${pkg.name}')">
+        Book This Package ✈
+      </button>
+    `;
+
+        /* Open first accordion by default */
+        document.getElementById("detailsModal").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function toggleAccordion(head) {
+        const body = head.nextElementSibling;
+        const isOpen = body.classList.contains("open");
+        /* Close all */
+        document
+          .querySelectorAll(".accordion-body")
+          .forEach((b) => b.classList.remove("open"));
+        document
+          .querySelectorAll(".accordion-head")
+          .forEach((h) => h.classList.remove("open"));
+        if (!isOpen) {
+          body.classList.add("open");
+          head.classList.add("open");
+        }
+      }
+
+      /* ─── Keyboard nav for modals ──────────────────────────── */
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeModal("bookingModal");
+          closeModal("detailsModal");
+        }
+      });
+    </script>
+  </body>
+</html>
